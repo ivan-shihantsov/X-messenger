@@ -62,3 +62,30 @@
 * python -m pip install --upgrade pip   `# обновление venv`
 * pip install -r requirements.txt       `# установка необходимых для работы модулей внутри venv`
 `NOTE: при создании requirements.txt в него записывается не вся выдача pip freeze, а только первично необходимые модули, например flask - его зависимости все равно установятся с ним`
+
+
+#### Запуск сервера
+Локально запустить сервер можно так:
+* cd X-messenger `# зайти в папку X-messenger`
+* .\venv\Scripts\activate `# войти в python virtual env`
+* python server.py `# запуск сервера`
+
+
+#### Доступ к серверу
+Клиентским приложением может быть что угодно.<br>
+Например, запросы к серверу можно делать через cURL:
+```
+# .\curl.exe -X 'POST' http://localhost:8001/sendMsg -H 'Content-Type: application/json' -d '{ \"username\":\"terminator\", \"toUser\":\"user1\", \"msg\":\"hello man\"}'
+```
+Также можно через python:
+```
+import requests
+
+url = 'http://localhost:8001/sendMsg'
+data = {"username":"terminator", "toUser":"user1", "msg":"hello man"}
+response = requests.post(url, data=data)
+```
+Если это GET-запрос (c POST так не получится) и используется XML/SOAP, а не схема с JSON (хедер -H 'Content-Type: application/xml' вместо -H 'Content-Type: application/json'), тогда для проверки можно вставить строку с параметрами прямо в адресную строку браузера:
+```
+http://localhost:8001/sendMsg?username=terminator&toUser=user1&msg=hello
+```
