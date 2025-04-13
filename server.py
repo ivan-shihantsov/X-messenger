@@ -51,16 +51,35 @@ def do_auth(user_id, key, authKey):
         return None
 
 
-def create_user(username, key, authKey):
+def create_user_record(username, passHash, datetime_now):
+    with open(users_file, 'r') as jsonfile:
+        data = json.load(jsonfile)
+
+    user_id = len(data) + 1
+    new_user = {"user_id": str(user_id), "username": username, "passHash": passHash, "created_at": datetime_now}
+    data.append(new_user)
+
+    with open(users_file, 'w') as jsonfile:
+        json.dump(data, jsonfile)
+
+    return user_id
+
+
+def create_user(username, key):
     user_id = find_user_id(username)
     if user_id != None:
         return None # user exists
 
+    # generate
+    datetime_now = "2025-04-06"
+    user_id = create_user_record(username, key, datetime_now)
+    return user_id
 
 
 @app.route("/signin", methods = ['POST'])
 def signIn():
     content = request.json
+
     user_id = content['user_id']
     key = content['key']
     authKey = "dummy" # content['authKey']
@@ -69,6 +88,20 @@ def signIn():
         return "<p>access allowed</p>"
     else:
         return "<p>access denied</p>"
+
+
+@app.route("/signup", methods = ['POST'])
+def signUp():
+    content = request.json
+
+    username = content['username']
+    key = content['key']
+    
+    user_id = create_user(username, key)
+    if user_id == None:
+        return "<p>cannot create user</p>"
+    else:
+        return jsonify(user_id)
 
 
 @app.route("/sendmsg", methods = ['POST'])
@@ -87,7 +120,6 @@ def sendMsg():
 
     print(f"user with ID '{user_id}' writes to chat with ID '{to_chat}' a message: '{msg}'")
     return jsonify({"answer":"good"})
-
 
 
 # localhost:8001 - keep for testing
