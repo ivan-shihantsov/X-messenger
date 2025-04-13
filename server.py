@@ -4,7 +4,9 @@ import json
 app = Flask(__name__)
 
 users_file = "data/users.txt"
-passwd_file = "data/userKeys.txt"
+chats_file = "data/chats.txt"
+msgs_file = "data/messages.txt"
+UIC_file = "data/users_in_chats.txt"
 
 
 def find_user_id(username):
@@ -20,12 +22,23 @@ def find_user_id(username):
     return None
 
 
-def do_auth(username, key, authKey):
-    user_id = find_user_id(username)
-    if user_id == None:
+def is_user(user_id):
+    with open(users_file, 'r') as jsonfile:
+        data = json.load(jsonfile)
+    
+    for i in range(0, len(data)):
+        if user_id == data[i]['user_id']:
+            return True
+        else:
+            continue
+    return False
+
+
+def do_auth(user_id, key, authKey):
+    if is_user(user_id) == False:
         return None
     
-    with open(passwd_file, 'r') as jsonfile:
+    with open(users_file, 'r') as jsonfile:
         data = json.load(jsonfile)
     
     for i in range(0, len(data)):
@@ -48,15 +61,33 @@ def create_user(username, key, authKey):
 @app.route("/signin", methods = ['POST'])
 def signIn():
     content = request.json
-
-    username = content['username']
+    user_id = content['user_id']
     key = content['key']
     authKey = "dummy" # content['authKey']
     
-    if do_auth(username, key, authKey) == "ok":
+    if do_auth(user_id, key, authKey) == "ok":
         return "<p>access allowed</p>"
     else:
         return "<p>access denied</p>"
+
+
+@app.route("/sendmsg", methods = ['POST'])
+def sendMsg():
+    content = request.json
+
+    user_id = content['user_id']
+    key = content['key']
+    authKey = "dummy" # content['authKey']
+
+    if do_auth(user_id, key, authKey) != "ok":
+        return "<p>access denied</p>"
+
+    to_chat = content['chat_id']
+    msg = content['msg']
+
+    print(f"user with ID '{user_id}' writes to chat with ID '{to_chat}' a message: '{msg}'")
+    return jsonify({"answer":"good"})
+
 
 
 # localhost:8001 - keep for testing
@@ -69,25 +100,6 @@ def hello_world():
 @app.route("/home")
 def home():
     return "<p>home page!!!</p>"
-
-
-@app.route("/sendmsg", methods = ['POST'])
-def send_msg():
-    content = request.json
-
-    username = content['username']
-    key = content['key']
-    authKey = "dummy" # content['authKey']
-
-    if do_auth(username, key, authKey) != "ok":
-        return "<p>access denied</p>"
-
-    to_chat = content['to_chat']
-    msg = content['msg']
-
-    print(f"user '{username}' writes to '{to_chat}' a message: '{msg}'")
-    return jsonify({"answer":"good"})
-
 
 
 if __name__ == "__main__":
