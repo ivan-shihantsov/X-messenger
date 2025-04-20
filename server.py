@@ -76,6 +76,44 @@ def create_user(username, key):
     return user_id
 
 
+def is_user_in_chat(user_id, chat_id):
+    if is_user(user_id) == False:
+        return False
+
+    with open(UIC_file, 'r') as jsonfile:
+        data = json.load(jsonfile)
+
+    for i in range(0, len(data)):
+        if user_id == data[i]['user_id'] and chat_id == data[i]['chat_id']:
+            return True
+    return False
+
+
+def get_new_msgs(chat_id, last_msg_id):
+    pass
+
+
+def save_message(chat_id, msg, user_id):
+    if is_user(user_id) == False:
+        return None
+
+    with open(msgs_file, 'r') as jsonfile:
+        data = json.load(jsonfile)
+    msg_id = len(data) + 1
+
+    # generate later
+    created_at = "2025-04-20"
+
+    new_msg = {"msg_id": msg_id, "chat_id": chat_id, "text": msg, "created_at": created_at, "from_user": user_id}
+    data.append(new_msg)
+
+    with open(msgs_file, 'w') as jsonfile:
+        json.dump(data, jsonfile)
+    
+    return "ok"
+
+
+
 @app.route("/signin", methods = ['POST'])
 def signIn():
     content = request.json
@@ -116,11 +154,40 @@ def sendMsg():
         return "<p>access denied</p>"
 
     to_chat = content['chat_id']
-    msg = content['msg']
 
-    print(f"user with ID '{user_id}' writes to chat with ID '{to_chat}' a message: '{msg}'")
+    if is_user_in_chat(user_id, to_chat) == False:
+        return "<p>access denied</p>"
+
+    msg = content['msg']
+    if save_message(to_chat, msg, user_id) == None:
+        return "<p>access denied</p>"
+
     return jsonify({"answer":"good"})
 
+
+@app.route("/getmsgs", methods = ['POST'])
+def getMsgs():
+    content = request.json
+
+    user_id = content['user_id']
+    key = content['key']
+    authKey = "dummy" # content['authKey']
+
+    if do_auth(user_id, key, authKey) != "ok":
+        return "<p>access denied</p>"
+
+    in_chat = content['chat_id']
+
+    if is_user_in_chat(user_id, in_chat) == False:
+        return "<p>access denied</p>"
+    
+    last_msg_id = content['last_msg_id']
+
+    messages = get_new_msgs(in_chat, last_msg_id)
+    if messages == None:
+        return "<p>access denied</p>"
+    else:
+        return jsonify(messages)
 
 # localhost:8001 - keep for testing
 @app.route("/")
