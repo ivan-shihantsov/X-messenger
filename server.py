@@ -9,6 +9,19 @@ msgs_file = "data/messages.json"
 UIC_file = "data/users_in_chats.json"
 
 
+def get_username(user_id):
+    with open(users_file, 'r') as jsonfile:
+        data = json.load(jsonfile)
+
+    for i in range(0, len(data)):
+        if user_id == data[i]['user_id']:
+            username = data[i]['username']
+            return username
+        else:
+            continue
+    return None
+
+
 def find_user_id(username):
     with open(users_file, 'r') as jsonfile:
         data = json.load(jsonfile)
@@ -74,6 +87,32 @@ def create_user(username, key):
     datetime_now = "2025-04-06"
     user_id = create_user_record(username, key, datetime_now)
     return user_id
+
+
+def get_chat_name(chat_id):
+    with open(chats_file, 'r') as jsonfile:
+        data = json.load(jsonfile)
+
+    for i in range(0, len(data)):
+        if chat_id == data[i]['chat_id']:
+            chat_name = data[i]['chat_name']
+            return chat_name
+        else:
+            continue
+    return None
+
+
+def get_chat_id(chat_name):
+    with open(chats_file, 'r') as jsonfile:
+        data = json.load(jsonfile)
+
+    for i in range(0, len(data)):
+        if chat_name == data[i]['chat_name']:
+            chat_id = data[i]['chat_id']
+            return chat_id
+        else:
+            continue
+    return None
 
 
 def is_chat(chat_id):
@@ -230,6 +269,48 @@ def create_chat(user_id, to_user_id, chat_name):
     return chat_id
 
 
+def find_chats(search_line):
+    results = []
+
+    # check if search_line is username
+    user_id = find_user_id(search_line)
+    if user_id == None:
+        pass
+    else:
+        username = search_line
+        new_line = {"type": "user", "user_id": user_id, "username": username}
+        results.append(new_line)
+
+    # check if search_line is user_id
+    if is_user(search_line):
+        user_id = search_line
+        username = get_username(user_id)
+        new_line = {"type": "user", "user_id": user_id, "username": username}
+        results.append(new_line)
+    else:
+        pass
+
+    # check if search_line is chat_name
+    chat_id = get_chat_id(search_line)
+    if chat_id == None:
+        pass
+    else:
+        chat_name = search_line
+        new_line = {"type": "chat", "chat_id": chat_id, "chat_name": chat_name}
+        results.append(new_line)
+
+    # check if search_line is chat_id
+    if is_chat(search_line):
+        chat_id = search_line
+        chat_name = get_chat_name(chat_id)
+        new_line = {"type": "chat", "chat_id": chat_id, "chat_name": chat_name}
+        results.append(new_line)
+    else:
+        pass
+
+    return results
+
+
 @app.route("/signin", methods = ['POST'])
 def signIn():
     content = request.json
@@ -360,6 +441,22 @@ def addToChat():
     else:
         return "<p>access denied</p>"
     return jsonify({"chat_id":str(chat_id)})
+
+
+@app.route("/search4chat", methods = ['POST'])
+def search4chat():
+    content = request.json
+
+    user_id = content['user_id']
+    key = content['key']
+    authKey = "dummy" # content['authKey']
+
+    if do_auth(user_id, key, authKey) != "ok":
+        return "<p>access denied</p>"
+
+    search_line = content['search_line']
+    chats = find_chats(search_line)
+    return jsonify(chats)
 
 
 # localhost:8001 - keep for testing
