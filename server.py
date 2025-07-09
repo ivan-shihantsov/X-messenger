@@ -168,8 +168,9 @@ def get_user_chats(user_id):
         data = json.load(jsonfile)
 
     for i in range(0, len(data)):
-        if chats_ids[i] == data[i]['chat_id']:
-            chats_info.append(data[i])
+        for j in range(0, len(chats_ids)):
+            if chats_ids[j] == data[i]['chat_id']:
+                chats_info.append(data[i])
 
     return chats_info
 
