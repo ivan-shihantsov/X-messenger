@@ -1,463 +1,50 @@
 from flask import Flask, app, request, jsonify
-import json
+from pymodules import *
+
 
 app = Flask(__name__)
-
-users_file = "data/users.json"
-chats_file = "data/chats.json"
-msgs_file = "data/messages.json"
-UIC_file = "data/users_in_chats.json"
-
-
-def get_username(user_id):
-    with open(users_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-
-    for i in range(0, len(data)):
-        if user_id == data[i]['user_id']:
-            username = data[i]['username']
-            return username
-        else:
-            continue
-    return None
-
-
-def find_user_id(username):
-    with open(users_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-    
-    for i in range(0, len(data)):
-        if username == data[i]['username']:
-            user_id = data[i]['user_id']
-            return user_id
-        else:
-            continue
-    return None
-
-
-def is_user(user_id):
-    with open(users_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-    
-    for i in range(0, len(data)):
-        if user_id == data[i]['user_id']:
-            return True
-        else:
-            continue
-    return False
-
-
-def do_auth(user_id, key, authKey):
-    if is_user(user_id) == False:
-        return None
-    
-    with open(users_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-    
-    for i in range(0, len(data)):
-        if user_id == data[i]['user_id']:
-            passHash = data[i]['passHash']
-
-    if passHash == key:
-        return "ok"
-    else:
-        return None
-
-
-def create_user_record(username, passHash, datetime_now):
-    with open(users_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-
-    user_id = len(data) + 1
-    new_user = {"user_id": str(user_id), "username": username, "passHash": passHash, "created_at": datetime_now}
-    data.append(new_user)
-
-    with open(users_file, 'w') as jsonfile:
-        json.dump(data, jsonfile)
-
-    return user_id
-
-
-def create_user(username, key):
-    user_id = find_user_id(username)
-    if user_id != None:
-        return None # user exists
-
-    # generate
-    datetime_now = "2025-04-06"
-    user_id = create_user_record(username, key, datetime_now)
-    return user_id
-
-
-def get_chat_name(chat_id):
-    with open(chats_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-
-    for i in range(0, len(data)):
-        if chat_id == data[i]['chat_id']:
-            chat_name = data[i]['chat_name']
-            return chat_name
-        else:
-            continue
-    return None
-
-
-def get_chat_id(chat_name):
-    with open(chats_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-
-    for i in range(0, len(data)):
-        if chat_name == data[i]['chat_name']:
-            chat_id = data[i]['chat_id']
-            return chat_id
-        else:
-            continue
-    return None
-
-
-def is_chat(chat_id):
-    with open(chats_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-
-    for i in range(0, len(data)):
-        if str(chat_id) == data[i]['chat_id']:
-            return True
-        else:
-            continue
-    return False
-
-
-def is_user_in_chat(user_id, chat_id):
-    if is_user(user_id) == False:
-        return False
-
-    with open(UIC_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-
-    for i in range(0, len(data)):
-        if user_id == data[i]['user_id'] and chat_id == data[i]['chat_id']:
-            return True
-    return False
-
-
-def is_msg_in_chat(msg_id, chat_id):
-    with open(msgs_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-
-    for i in range(0, len(data)):
-        if msg_id == data[i]['msg_id'] and chat_id == data[i]['chat_id']:
-            return True
-    return False
-
-
-def get_user_chats(user_id):
-    if is_user(user_id) == False:
-        return None
-
-    chats_ids = []
-    with open(UIC_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-
-    for i in range(0, len(data)):
-        if user_id == data[i]['user_id']:
-            chats_ids.append(data[i]['chat_id'])
-
-    chats_info = []
-
-    with open(chats_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-
-    for i in range(0, len(data)):
-        for j in range(0, len(chats_ids)):
-            if chats_ids[j] == data[i]['chat_id']:
-                chats_info.append(data[i])
-
-    return chats_info
-
-
-def get_new_msgs(chat_id, last_msg_id):
-    if is_msg_in_chat(last_msg_id, chat_id) == False:
-        return None
-
-    with open(msgs_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-
-    msgs_list = []
-
-    # no messages on client - get all
-    if int(last_msg_id) == -1:
-        for i in range(0, len(data)):
-            if data[i]['chat_id'] == chat_id:
-                msgs_list.append(data[i])
-    # get since the last message
-    else:
-        for i in range(int(last_msg_id), len(data)):
-            if data[i]['chat_id'] == chat_id:
-                msgs_list.append(data[i])
-
-    return json.dumps(msgs_list)
-
-
-def save_message(chat_id, msg, user_id):
-    if is_user(user_id) == False:
-        return None
-
-    with open(msgs_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-    msg_id = len(data) + 1
-
-    # generate later
-    created_at = "2025-04-20"
-
-    new_msg = {"msg_id": str(msg_id), "chat_id": chat_id, "text": msg, "created_at": created_at, "from_user": user_id}
-    data.append(new_msg)
-
-    with open(msgs_file, 'w') as jsonfile:
-        json.dump(data, jsonfile)
-    
-    return "ok"
-
-
-def add_to_chat(user_id, to_chat_id):
-    if is_chat(to_chat_id) == False:
-        return None
-
-    if is_user_in_chat(user_id, to_chat_id):
-        return to_chat_id
-
-    with open(UIC_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-
-    link_id = len(data) + 1
-    new_link = {"link_id": str(link_id), "user_id": user_id, "chat_id": str(to_chat_id)}
-    data.append(new_link)
-
-    with open(UIC_file, 'w') as jsonfile:
-        json.dump(data, jsonfile)
-
-    return to_chat_id
-
-
-def create_new_chat(admin, chat_name):
-    with open(chats_file, 'r') as jsonfile:
-        data = json.load(jsonfile)
-
-    chat_id = len(data) + 1
-
-    # generate later
-    created_at = "2025-04-20"
-
-    # default color
-    color = "#f06359"
-
-    new_chat = {"chat_id": str(chat_id), "chat_name": chat_name, "color": color, "created_at": created_at, "admin": admin}
-    data.append(new_chat)
-
-    with open(chats_file, 'w') as jsonfile:
-        json.dump(data, jsonfile)
-
-    return chat_id
-
-
-def create_chat(user_id, to_user_id, chat_name):
-    if is_user(user_id) == False and is_user(to_user_id) == False:
-        return None
-
-    chat_id = create_new_chat(user_id, chat_name)
-    add_to_chat(user_id, chat_id)
-    add_to_chat(to_user_id, chat_id)
-
-    return chat_id
-
-
-def find_chats(search_line):
-    results = []
-
-    # check if search_line is username
-    user_id = find_user_id(search_line)
-    if user_id == None:
-        pass
-    else:
-        username = search_line
-        new_line = {"type": "user", "user_id": user_id, "username": username}
-        results.append(new_line)
-
-    # check if search_line is user_id
-    if is_user(search_line):
-        user_id = search_line
-        username = get_username(user_id)
-        new_line = {"type": "user", "user_id": user_id, "username": username}
-        results.append(new_line)
-    else:
-        pass
-
-    # check if search_line is chat_name
-    chat_id = get_chat_id(search_line)
-    if chat_id == None:
-        pass
-    else:
-        chat_name = search_line
-        new_line = {"type": "chat", "chat_id": chat_id, "chat_name": chat_name}
-        results.append(new_line)
-
-    # check if search_line is chat_id
-    if is_chat(search_line):
-        chat_id = search_line
-        chat_name = get_chat_name(chat_id)
-        new_line = {"type": "chat", "chat_id": chat_id, "chat_name": chat_name}
-        results.append(new_line)
-    else:
-        pass
-
-    return results
 
 
 @app.route("/signin", methods = ['POST'])
 def signIn():
     content = request.json
-
-    user_id = content['user_id']
-    key = content['key']
-    authKey = "dummy" # content['authKey']
-    
-    if do_auth(user_id, key, authKey) == "ok":
-        return "<p>access allowed</p>"
-    else:
-        return "<p>access denied</p>"
+    return signin.sign_in(content)
 
 
 @app.route("/signup", methods = ['POST'])
 def signUp():
     content = request.json
-
-    username = content['username']
-    key = content['key']
-    
-    user_id = create_user(username, key)
-    if user_id == None:
-        return "<p>cannot create user</p>"
-    else:
-        return jsonify(user_id)
+    return jsonify(signup.sign_up(content))
 
 
 @app.route("/sendmsg", methods = ['POST'])
 def sendMsg():
     content = request.json
-
-    user_id = content['user_id']
-    key = content['key']
-    authKey = "dummy" # content['authKey']
-
-    if do_auth(user_id, key, authKey) != "ok":
-        return "<p>access denied</p>"
-
-    to_chat = content['chat_id']
-
-    if is_user_in_chat(user_id, to_chat) == False:
-        return "<p>access denied</p>"
-
-    msg = content['msg']
-    if save_message(to_chat, msg, user_id) == None:
-        return "<p>access denied</p>"
-
-    return jsonify({"answer":"good"})
+    return jsonify(sendmsg.send_msg(content))
 
 
 @app.route("/getmsgs", methods = ['POST'])
 def getMsgs():
     content = request.json
-
-    user_id = content['user_id']
-    key = content['key']
-    authKey = "dummy" # content['authKey']
-
-    if do_auth(user_id, key, authKey) != "ok":
-        return "<p>access denied</p>"
-
-    in_chat = content['chat_id']
-
-    if is_user_in_chat(user_id, in_chat) == False:
-        return "<p>access denied</p>"
-    
-    last_msg_id = content['last_msg_id']
-    messages = get_new_msgs(in_chat, last_msg_id)
-    if messages == None:
-        return "<p>access denied</p>"
-    else:
-        return jsonify(messages)
+    return jsonify(getmsgs.get_msgs(content))
 
 
 @app.route("/getchats", methods = ['POST'])
 def getChats():
     content = request.json
-
-    user_id = content['user_id']
-    key = content['key']
-    authKey = "dummy" # content['authKey']
-
-    if do_auth(user_id, key, authKey) != "ok":
-        return "<p>access denied</p>"
-
-    chats_list = get_user_chats(user_id)
-    if chats_list == None:
-        return "<p>access denied</p>"
-    else:
-        return jsonify(chats_list)
+    return jsonify(getchats.get_chats(content))
 
 
 @app.route("/add2chat", methods = ['POST'])
 def addToChat():
     content = request.json
-
-    user_id = content['user_id']
-    key = content['key']
-    authKey = "dummy" # content['authKey']
-
-    if do_auth(user_id, key, authKey) != "ok":
-        return "<p>access denied</p>"
-
-    to_chat_id = None
-    to_user_id = None
-
-    try:
-        to_chat_id = content['to_chat_id']
-    except KeyError:
-        pass
-
-    try:
-        to_user_id = content['to_user_id']
-    except KeyError:
-        if to_chat_id == None:
-            return "<p>access denied</p>"
-
-    if to_chat_id != None and to_user_id == None:
-        chat_id = add_to_chat(user_id, to_chat_id)
-        if chat_id == None:
-            return "<p>access denied</p>"
-    elif to_chat_id == None and to_user_id != None:
-        chat_name = content['chat_name']
-        chat_id = create_chat(user_id, to_user_id, chat_name)
-        if chat_id == None:
-            return "<p>access denied</p>"
-    else:
-        return "<p>access denied</p>"
-    return jsonify({"chat_id":str(chat_id)})
+    return jsonify(add2chat.add_to_chat(content))
 
 
 @app.route("/search4chat", methods = ['POST'])
 def search4chat():
     content = request.json
-
-    user_id = content['user_id']
-    key = content['key']
-    authKey = "dummy" # content['authKey']
-
-    if do_auth(user_id, key, authKey) != "ok":
-        return "<p>access denied</p>"
-
-    search_line = content['search_line']
-    chats = find_chats(search_line)
-    return jsonify(chats)
+    return jsonify(search4chat.search_for_chat(content))
 
 
 # localhost:8001 - keep for testing
