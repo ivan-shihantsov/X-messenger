@@ -1,5 +1,5 @@
 import json
-from .common import do_auth, is_user, is_chat, is_user_in_chat
+from .common import do_auth, is_user, is_chat, is_user_in_chat, get_datetime_now
 
 
 chats_file = "data/chats.json"
@@ -32,8 +32,7 @@ def create_new_chat(admin, chat_name):
 
     chat_id = len(data) + 1
 
-    # generate later
-    created_at = "2025-04-20"
+    created_at = get_datetime_now()
 
     # default color
     color = "#f06359"

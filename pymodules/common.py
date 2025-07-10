@@ -1,8 +1,19 @@
 import json
+from datetime import datetime, timezone
 
 users_file = "data/users.json"
 chats_file = "data/chats.json"
 UIC_file = "data/users_in_chats.json"
+
+
+def get_datetime_now():
+    datetime_obj = datetime.now(timezone.utc) # UTC+0
+
+    # 2025-07-10 13:56:38 +0000
+    time_template = "%Y-%m-%d %H:%M:%S %z"
+    result = datetime_obj.strftime(time_template)
+
+    return result
 
 
 def is_user(user_id):

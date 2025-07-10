@@ -1,5 +1,5 @@
 import json
-from .common import do_auth, is_user, is_user_in_chat
+from .common import do_auth, is_user, is_user_in_chat, get_datetime_now
 
 
 msgs_file = "data/messages.json"
@@ -13,8 +13,7 @@ def save_message(chat_id, msg, user_id):
         data = json.load(jsonfile)
     msg_id = len(data) + 1
 
-    # generate later
-    created_at = "2025-04-20"
+    created_at = get_datetime_now()
 
     new_msg = {"msg_id": str(msg_id), "chat_id": chat_id, "text": msg, "created_at": created_at, "from_user": user_id}
     data.append(new_msg)
