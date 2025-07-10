@@ -1,1 +1,345 @@
-[{"msg_id": "1", "chat_id": "1", "text": "hello. how are you?", "created_at": "2025-04-05", "from_user": "1"}, {"msg_id": "2", "chat_id": "1", "text": "hello. I'm OK. go to the gym", "created_at": "2025-04-05", "from_user": "2"}, {"msg_id": "3", "chat_id": "1", "text": "good idea, but NO", "created_at": "2025-04-05", "from_user": "1"}, {"msg_id": "4", "chat_id": "1", "text": "what? you are lazy fat boy. GO!", "created_at": "2025-04-05", "from_user": "2"}, {"msg_id": "5", "chat_id": "1", "text": "hey, man. where are you?", "created_at": "2025-04-05", "from_user": "2"}, {"msg_id": "6", "chat_id": "2", "text": "hello family", "created_at": "2025-04-20", "from_user": "3"}, {"msg_id": "7", "chat_id": "2", "text": "hi", "created_at": "2025-04-20", "from_user": "2"}, {"msg_id": "8", "chat_id": "2", "text": "how are you?", "created_at": "2025-04-20", "from_user": "3"}]
+[
+    {
+        "msg_id": "1",
+        "chat_id": "1",
+        "text": "hello. how are you?",
+        "created_at": "2025-04-09 13:56:38 +0000",
+        "from_user": "1"
+    },
+    {
+        "msg_id": "2",
+        "chat_id": "1",
+        "text": "hello. I'm OK. go to the gym",
+        "created_at": "2025-04-09 13:57:21 +0000",
+        "from_user": "2"
+    },
+    {
+        "msg_id": "3",
+        "chat_id": "1",
+        "text": "good idea, but NO",
+        "created_at": "2025-04-09 13:57:55 +0000",
+        "from_user": "1"
+    },
+    {
+        "msg_id": "4",
+        "chat_id": "1",
+        "text": "what? you are lazy fat boy. GO!",
+        "created_at": "2025-04-09 13:58:10 +0000",
+        "from_user": "2"
+    },
+    {
+        "msg_id": "5",
+        "chat_id": "1",
+        "text": "hey, man. where are you?",
+        "created_at": "2025-04-09 14:11:23 +0000",
+        "from_user": "2"
+    },
+    {
+        "msg_id": "6",
+        "chat_id": "2",
+        "text": "hello family",
+        "created_at": "2025-04-09 15:21:18 +0000",
+        "from_user": "3"
+    },
+    {
+        "msg_id": "7",
+        "chat_id": "2",
+        "text": "hi",
+        "created_at": "2025-04-09 15:32:32 +0000",
+        "from_user": "2"
+    },
+    {
+        "msg_id": "8",
+        "chat_id": "2",
+        "text": "how are you?",
+        "created_at": "2025-04-09 15:33:08 +0000",
+        "from_user": "3"
+    },
+    {
+        "msg_id": "9",
+        "chat_id": "2",
+        "text": "I am also here",
+        "created_at": "2025-04-09 15:41:52 +0000",
+        "from_user": "4"
+    },
+    {
+        "msg_id": "10",
+        "chat_id": "2",
+        "text": "My dear added me too",
+        "created_at": "2025-04-09 15:47:19 +0000",
+        "from_user": "7"
+    },
+    {
+        "msg_id": "11",
+        "chat_id": "2",
+        "text": "I see everybody is here",
+        "created_at": "2025-04-09 15:49:51 +0000",
+        "from_user": "2"
+    },
+    {
+        "msg_id": "12",
+        "chat_id": "2",
+        "text": "Yes! Have a nice day!",
+        "created_at": "2025-04-09 15:51:20 +0000",
+        "from_user": "7"
+    },
+    {
+        "msg_id": "13",
+        "chat_id": "3",
+        "text": "Guys! Go DOTA2!",
+        "created_at": "2025-04-09 16:01:02 +0000",
+        "from_user": "7"
+    },
+    {
+        "msg_id": "14",
+        "chat_id": "3",
+        "text": "no. I am busy",
+        "created_at": "2025-04-09 16:09:25 +0000",
+        "from_user": "2"
+    },
+    {
+        "msg_id": "15",
+        "chat_id": "3",
+        "text": "I am doing my homework",
+        "created_at": "2025-04-09 16:11:16 +0000",
+        "from_user": "5"
+    },
+    {
+        "msg_id": "16",
+        "chat_id": "3",
+        "text": "will join later",
+        "created_at": "2025-04-09 16:11:48 +0000",
+        "from_user": "5"
+    },
+    {
+        "msg_id": "17",
+        "chat_id": "3",
+        "text": "ok?",
+        "created_at": "2025-04-09 16:11:53 +0000",
+        "from_user": "5"
+    },
+    {
+        "msg_id": "18",
+        "chat_id": "3",
+        "text": "ok, waiting for you",
+        "created_at": "2025-04-09 16:13:22 +0000",
+        "from_user": "7"
+    },
+    {
+        "msg_id": "19",
+        "chat_id": "3",
+        "text": "ready",
+        "created_at": "2025-04-09 16:57:38 +0000",
+        "from_user": "5"
+    },
+    {
+        "msg_id": "20",
+        "chat_id": "3",
+        "text": "GO",
+        "created_at": "2025-04-09 17:01:12 +0000",
+        "from_user": "7"
+    },
+    {
+        "msg_id": "21",
+        "chat_id": "4",
+        "text": "Hi, girls",
+        "created_at": "2025-04-09 17:23:10 +0000",
+        "from_user": "3"
+    },
+    {
+        "msg_id": "22",
+        "chat_id": "4",
+        "text": "Hello",
+        "created_at": "2025-04-09 17:45:05 +0000",
+        "from_user": "4"
+    },
+    {
+        "msg_id": "23",
+        "chat_id": "4",
+        "text": "oh, a great new chat",
+        "created_at": "2025-04-09 17:51:27 +0000",
+        "from_user": "6"
+    },
+    {
+        "msg_id": "24",
+        "chat_id": "5",
+        "text": "hello my family!",
+        "created_at": "2025-04-09 18:01:17 +0000",
+        "from_user": "1"
+    },
+    {
+        "msg_id": "25",
+        "chat_id": "5",
+        "text": "ho-ho",
+        "created_at": "2025-04-09 18:11:22 +0000",
+        "from_user": "5"
+    },
+    {
+        "msg_id": "26",
+        "chat_id": "5",
+        "text": "finally, we are together",
+        "created_at": "2025-04-09 18:12:13 +0000",
+        "from_user": "5"
+    },
+    {
+        "msg_id": "27",
+        "chat_id": "5",
+        "text": "Agree, Love you",
+        "created_at": "2025-04-09 18:24:51 +0000",
+        "from_user": "1"
+    },
+    {
+        "msg_id": "28",
+        "chat_id": "5",
+        "text": "stop this spam",
+        "created_at": "2025-04-09 18:31:48 +0000",
+        "from_user": "6"
+    },
+    {
+        "msg_id": "29",
+        "chat_id": "5",
+        "text": "ok, mommy",
+        "created_at": "2025-04-09 18:33:00 +0000",
+        "from_user": "1"
+    },
+    {
+        "msg_id": "30",
+        "chat_id": "6",
+        "text": "hello",
+        "created_at": "2025-04-09 18:41:10 +0000",
+        "from_user": "1"
+    },
+    {
+        "msg_id": "31",
+        "chat_id": "6",
+        "text": "hi",
+        "created_at": "2025-04-09 18:55:20 +0000",
+        "from_user": "2"
+    },
+    {
+        "msg_id": "32",
+        "chat_id": "6",
+        "text": "good morning",
+        "created_at": "2025-04-09 19:21:08 +0000",
+        "from_user": "3"
+    },
+    {
+        "msg_id": "33",
+        "chat_id": "6",
+        "text": "hello everyone",
+        "created_at": "2025-04-10 09:10:47 +0000",
+        "from_user": "4"
+    },
+    {
+        "msg_id": "34",
+        "chat_id": "6",
+        "text": "nice to see you all",
+        "created_at": "2025-04-10 09:21:52 +0000",
+        "from_user": "5"
+    },
+    {
+        "msg_id": "35",
+        "chat_id": "6",
+        "text": "just hello",
+        "created_at": "2025-04-10 11:32:15 +0000",
+        "from_user": "6"
+    },
+    {
+        "msg_id": "36",
+        "chat_id": "1",
+        "text": "hello. Today I can join to your team in the gym",
+        "created_at": "2025-04-10 12:31:32 +0000",
+        "from_user": "1"
+    },
+    {
+        "msg_id": "37",
+        "chat_id": "1",
+        "text": "nice, man",
+        "created_at": "2025-04-10 12:41:14 +0000",
+        "from_user": "2"
+    },
+    {
+        "msg_id": "38",
+        "chat_id": "1",
+        "text": "where I can meet you?",
+        "created_at": "2025-04-10 12:53:56 +0000",
+        "from_user": "1"
+    },
+    {
+        "msg_id": "39",
+        "chat_id": "1",
+        "text": "near my home at 5 PM",
+        "created_at": "2025-04-10 13:04:16 +0000",
+        "from_user": "2"
+    },
+    {
+        "msg_id": "40",
+        "chat_id": "1",
+        "text": "ok?",
+        "created_at": "2025-04-10 13:05:13 +0000",
+        "from_user": "2"
+    },
+    {
+        "msg_id": "41",
+        "chat_id": "1",
+        "text": "yes!",
+        "created_at": "2025-04-10 13:13:39 +0000",
+        "from_user": "1"
+    },
+    {
+        "msg_id": "42",
+        "chat_id": "3",
+        "text": "CS:GO?",
+        "created_at": "2025-04-11 16:01:12 +0000",
+        "from_user": "2"
+    },
+    {
+        "msg_id": "43",
+        "chat_id": "3",
+        "text": "yes",
+        "created_at": "2025-04-11 16:03:23 +0000",
+        "from_user": "7"
+    },
+    {
+        "msg_id": "44",
+        "chat_id": "3",
+        "text": "me too",
+        "created_at": "2025-04-11 16:08:34 +0000",
+        "from_user": "5"
+    },
+    {
+        "msg_id": "45",
+        "chat_id": "3",
+        "text": "in 10 minutes pls",
+        "created_at": "2025-04-11 16:09:01 +0000",
+        "from_user": "5"
+    },
+    {
+        "msg_id": "46",
+        "chat_id": "3",
+        "text": "ok",
+        "created_at": "2025-04-11 16:09:46 +0000",
+        "from_user": "2"
+    },
+    {
+        "msg_id": "47",
+        "chat_id": "3",
+        "text": "gyus, hurry up",
+        "created_at": "2025-04-11 16:24:14 +0000",
+        "from_user": "7"
+    },
+    {
+        "msg_id": "48",
+        "chat_id": "3",
+        "text": "here",
+        "created_at": "2025-04-11 16:26:39 +0000",
+        "from_user": "5"
+    },
+    {
+        "msg_id": "49",
+        "chat_id": "3",
+        "text": "GO",
+        "created_at": "2025-04-11 17:27:11 +0000",
+        "from_user": "7"
+    }
+]

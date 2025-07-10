@@ -1,1 +1,50 @@
-[{"user_id": "1", "username": "qwerty", "passHash": "b1b3773a05c0ed0176787a4f1574ff0075f7521e", "created_at": "2025-04-05"}, {"user_id": "2", "username": "proger", "passHash": "c356ba5feb77216ba172e70b5a75d085ba44b2e5", "created_at": "2025-04-06"}, {"user_id": "3", "username": "user1", "passHash": "b3daa77b4c04a9551b8781d03191fe098f325e67", "created_at": "2025-04-06"}, {"user_id": "4", "username": "user2001", "passHash": "a1881c06eec96db9901c7bbfe41c42a3f08e9cb4", "created_at": "2025-04-06"}, {"user_id": "5", "username": "terminator", "passHash": "11fee33453c427b3e6ebabb7d2d2120312c0e7c9", "created_at": "2025-04-06"}, {"user_id": "6", "username": "member-x", "passHash": "f0a77bf70fe8fad593bc02e28878e0ee83bd2aed", "created_at": "2025-04-06"}, {"user_id": "7", "username": "buba", "passHash": "6ed66eac474e5379251d44b851edfa7e85432250", "created_at": "2025-04-06"}]
+[
+    {
+        "user_id": "1",
+        "username": "qwerty",
+        "passHash": "b1b3773a05c0ed0176787a4f1574ff0075f7521e",
+        "created_at": "2025-04-05 10:03:38 +0000"
+    },
+    {
+        "user_id": "2",
+        "username": "proger",
+        "passHash": "c356ba5feb77216ba172e70b5a75d085ba44b2e5",
+        "created_at": "2025-04-05 11:12:26 +0000"
+    },
+    {
+        "user_id": "3",
+        "username": "user1",
+        "passHash": "b3daa77b4c04a9551b8781d03191fe098f325e67",
+        "created_at": "2025-04-05 12:35:17 +0000"
+    },
+    {
+        "user_id": "4",
+        "username": "user2001",
+        "passHash": "fdb379247b8dfa737ece55351064ab009cf401aa",
+        "created_at": "2025-04-05 13:15:52 +0000"
+    },
+    {
+        "user_id": "5",
+        "username": "terminator",
+        "passHash": "11fee33453c427b3e6ebabb7d2d2120312c0e7c9",
+        "created_at": "2025-04-06 09:12:39 +0000"
+    },
+    {
+        "user_id": "6",
+        "username": "member-x",
+        "passHash": "f0a77bf70fe8fad593bc02e28878e0ee83bd2aed",
+        "created_at": "2025-04-06 11:21:18 +0000"
+    },
+    {
+        "user_id": "7",
+        "username": "buba",
+        "passHash": "6ed66eac474e5379251d44b851edfa7e85432250",
+        "created_at": "2025-04-06 15:33:03 +0000"
+    },
+    {
+        "user_id": "8",
+        "username": "newbie",
+        "passHash": "8332978fd314bd2512bc035b51109e9972cd9e1d",
+        "created_at": "2025-04-06 18:42:58 +0000"
+    }
+]
